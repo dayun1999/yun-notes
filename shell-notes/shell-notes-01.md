@@ -2,11 +2,13 @@
 
 ## 内容大纲
 
-- 自定义linux提示符
-- 别名
-- tput命令和stty命令
-- 命令行参数
-- read命令的用法
+- *自定义linux提示符*
+- *别名*
+- *tput命令和stty命令*
+- *命令行参数*
+- *read命令的用法*
+- *函数简介*
+- *for循环*
 
 ## 1.自定义linux提示符
 
@@ -199,4 +201,87 @@ done
 # 举例
 ❄[wdy ~/shell_learning]>>> read -d ":" var
 hello:
+```
+
+## 6.函数简介
+
+- 定义函数
+
+```bash
+# 这样定义
+function function_name() 
+{
+    statements;
+}
+# 或者这样
+function_name()
+{
+    statements;
+}
+```
+
+- 调用函数
+
+```bash
+function_name ; #执行函数
+```
+
+- 参数传递(参数的访问看上面的“命令行参数”一节)
+
+```bash
+function_name arg1 arg2
+```
+
+## 7.for循环
+
+- ### 面向列表的for循环
+
+```bash
+for var in list;
+do
+    commands; #使用变量$var
+done
+```
+
+- ### 迭代指定范围的数字
+
+```bash
+for ((i=0; i<10; i++))
+{
+    commands; #使用变量$i
+}
+```
+
+- ### 循环到条件满足为止
+
+```bash
+while condition
+do
+    commands;
+done
+
+# 补充一下死循环
+# 第一种: while true
+while true
+do
+    commands;
+done
+# 第二种: while :
+while :
+do
+    commands;
+done
+```
+
+- ### until循环
+
+```bash
+# until会一直循环,直到条件为真为止
+#!/bin/bash
+#Filename: loop_until.sh
+x=0;
+until [ $x -eq 9 ];
+do
+    let x++; echo $x;
+done
 ```
