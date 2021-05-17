@@ -5,6 +5,8 @@
 - 自定义linux提示符
 - 别名
 - tput命令和stty命令
+- 命令行参数
+- read命令的用法
 
 ## 1.自定义linux提示符
 
@@ -30,7 +32,7 @@ PS1='❄\[\e[1;37m\][\[\e[1;36m\]\u \[\e[1;35m\]\w\[\e[1;37m\]]\[\e[1;31m\]>\[\e
 
 - `❄`  没什么意义,只想演示编辑支持unicode字符
 - `\e[1:31m` 修改字体颜色,其中数字31代表红色,可修改为其他颜色,黑色=30,绿色=32,黄色=33,蓝色=34,洋红=35,青色=36,白色=37
-- `\[`和`\]`  不键入该两个字符你会发现输入长命令的时候不会自动换行而且linux prompt会被blackspace键删掉. 
+- `\[`和`\]`  不键入该两个字符你会发现输入长命令的时候不会自动换行而且linux prompt会被blackspace键删掉
 [感兴趣的可以看这个](https://unix.stackexchange.com/questions/150492/backspace-deletes-bash-prompt)
 
 **PS: 更多配置见图片**
@@ -40,7 +42,7 @@ PS1='❄\[\e[1;37m\][\[\e[1;36m\]\u \[\e[1;35m\]\w\[\e[1;37m\]]\[\e[1;31m\]>\[\e
 
 - ### 使用别名
 
-使用 `alias` 命令为长命令创建别名,实现便捷化<br />
+使用 `alias` 命令为长命令创建别名,实现便捷化 \
 格式为
 
 ```bash
@@ -118,11 +120,83 @@ tput setf n # n=range(0-7)
 #!/bin/bash
 #Filename: passwd.sh
 echo -e "Enter password: "
-#在读取密码之前禁止回显
+# 在读取密码之前禁止回显
 stty -echo
 read password
-#重新允许回显
+# 重新允许回显
 stty echo
 echo
 echo Password read.
+```
+
+## 4.命令行参数
+
+```bash
+# 修改文件的权限
+chmod 755 test.sh
+# 传递参数
+./test.sh arg1 arg2 arg3
+```
+
+|符号|意义|
+|:--|:--|
+|$0 |脚本名称|
+|$1 |第一个参数,例子中的arg1|
+|$2 |第二个参数,例子中的arg2|
+|$@ |以列表的形式打印所有的参数|
+|$* |类似于"$@",但是将所有参数视为一个整体|
+
+举例:
+
+```bash
+#!/bin/bash
+#Filename: args.sh
+for i in `seq 1 $#`
+do
+    echo $i is $1
+    shift
+done
+```
+
+执行并展示运行结果:
+
+```bash
+❄[wdy ~/shell_learning]>>> ./args.sh a b c d e f
+
+1 is a
+2 is b
+3 is c
+4 is d
+5 is e
+6 is f
+```
+
+## 5.read命令的用法
+
+```bash
+# 1.读取n个字符并存入变量
+# read -n number_of_character <变量名>
+# 举例
+❄[wdy ~/shell_learning]>>> read -n 2 var
+
+# 2.无回显的方式读取密码
+# read -s <变量名>
+# 举例
+❄[wdy ~/shell_learning]>>> read -s var
+
+# 3.使用提示信息
+# read -p "提示信息" <变量名>
+# 举例
+❄[wdy ~/shell_learning]>>> read -p "Enter input:" var
+
+# 4.给定期限读取输入
+# read -t timeout <变量名>
+# 举例
+❄[wdy ~/shell_learning]>>> read -t 3 var #单位:秒
+
+# 5.给定分隔符结束输入
+# read -d <delimiter> <变量名>
+# 举例
+❄[wdy ~/shell_learning]>>> read -d ":" var
+hello:
 ```
