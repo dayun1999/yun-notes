@@ -14,6 +14,10 @@ by 大云
 
 ### 4. [shell-notes-04](https://github.com/code4EE/yun-notes/blob/main/shell-notes/shell-notes-04.md)
 
+- ## Arduino
+
+### 1.[Arduino的端口操作](https://github.com/code4EE/yun-notes/blob/main/arduino-notes/arduino_port_manipulation.md)
+
 - ## STM32
 
 ### 1. [stm-notes-01](https://github.com/code4EE/yun-notes)
