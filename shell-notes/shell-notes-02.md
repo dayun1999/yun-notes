@@ -5,6 +5,9 @@
 - *find命令*
 - *玩转xargs*
 - *tr命令*
+- *校验和 (checksum)*
+- *加密工具与散列*
+- *行排序*
 
 ## 1.find命令
 
@@ -164,3 +167,115 @@ total: 6
 |punct|标点符号|
 
 > 使用如下: tr '[:lower:]' '[:upper:]'
+
+## 4. 校验和 (checksum)
+
+校验和用来检查文件是否发生改变，有助于核实下载文件的完整性等等, 常见的校验和算法: `MD5`和`SHA-1`
+
+### 4.1、MD5算法计算校验和-- md5sum 命令
+
+#### PS: md5sum是一个 *32* 个字符的十六进制串
+
+```bash
+# MD5算法对应命令--md5sum
+# 1. 对单个文件计算校验和
+>>> md5sum cecho.sh 
+5fe499be53b0d7c2b1ba0d3cec9bf653  cecho.sh
+
+# 2. 对多个文件分别计算校验和
+>>> md5sum cecho.sh hello.txt out.txt 
+5fe499be53b0d7c2b1ba0d3cec9bf653  cecho.sh
+5ebc7480a6da0d09d93879da9b71d707  hello.txt
+dc8a89c05151ecdac50718932cd371c8  out.txt
+
+# 3. 使用-c选项核实数据的完整性
+>>> md5sum wdy.sh > file_sum.md5
+# 中途修改wdy.sh的内容
+# 然后核原来的校验和校验,发现不一样
+>>> md5sum -c file_sum.md5 
+wdy.sh: FAILED
+md5sum: WARNING: 1 computed checksum did NOT match
+
+```
+
+### 4.2、SHA-1计算校验和-- sha1sum 命令
+
+#### PS: sha1sum是一个 *40* 个字符的十六进制串
+
+命令格式和`md5sum`一样
+
+```bash
+# SHA-1算法对应命令--sha1sum
+# 对单个文件计算校验和
+>>> sha1sum cecho.sh 
+9370ff4e182174cb9a076226b50f8df4497a4c00  cecho.sh
+
+# 对多个文件分别计算校验和
+>>> sha1sum cecho.sh hello.txt out.txt 
+9370ff4e182174cb9a076226b50f8df4497a4c00  cecho.sh
+ba6f7a639cbac7e9c6918d03a4feefc1c40e62e5  hello.txt
+b2bff929f414e8763495ad5834de8afdaade73d1  out.txt
+
+```
+
+### 4.3、 对目录进行校验
+
+也即对目录中的所有文件计算校验和
+
+#### `md5deep`命令的使用(使用之前先安装)
+
+```bash
+# -r代表递归
+# -l代表使用相对路径,md5deep默认使用绝对路径
+>>> sudo md5deep shell_learning/ -rl > directory.md5
+>>> cat directory.md5
+892020bedc3b7110c475bf43246b64ad  shell_learning/all_sh_files.txt
+02e47d97d9071aa664e083fee26dde2a  shell_learning/wdy.sh
+3a0666c07bad1a857d8359a70dedb685  shell_learning/a3
+cc5e9216b37b3f82dfe398ed311d16e6  shell_learning/a2
+...
+...
+d41d8cd98f00b204e9800998ecf8427e  shell_learning/*.txt
+dc8a89c05151ecdac50718932cd371c8  shell_learning/out.txt
+
+```
+
+### 4.4、MD5和SHA-1已不再安全
+
+MD5和SHA-1都是单向散列算法，均无法推出原始数据,由于计算能力的提升，上述加密算法已经不再安全，目前更推荐使用`bcrypt` 和 `sha512sum`这样的工具进行加密的 \
+推荐阅读: [加密、散列和加盐的区别](https://www.bisend.cn/blog/difference-encryption-hashing-salting)
+
+## 5. 加密工具与散列
+
+加密算法和校验和算法不一样的是加密算法可以无损的重构数据 \
+Linux中常见的加密算法有`bcrypt` `base64` `gpg`
+
+## 6. 行排序
+
+对文本进行按行排序
+
+### 6.1、`sort`命令和`uniq`命令
+
+- #### 排序一组文件
+
+```bash
+>>> sort file1.txt file2.txt > sorted.txt
+
+# 也可写成
+>>> sort file1.txt file2.txt -o sorted.txt
+```
+
+- #### 按照数字排序
+
+```bash
+>>> sort -n file.txt
+```
+
+- #### 逆序排序
+
+```bash
+>>> sort -r file.txt
+```
+
+- #### 更多用法见`man sort`
+  
