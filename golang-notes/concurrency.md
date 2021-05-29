@@ -2,6 +2,14 @@
 
 推荐直接阅读[->Effective go](https://golang.org/doc/effective_go#concurrency)
 
+并发优秀代码学习->[点这](https://github.com/code4EE/yun-notes/golang-notes/blob/main/golang-notes/concurrency_code_collections.md)
+
+## 内容大纲
+
+- *并发还是并行？*
+- *关于并发的谚语*
+- *那些可以优化的并发的代码*
+
 ## 并发还是并行?
 
 - ### 并发的思想: 将一个程序构建成(structure)多个独立的执行模块
