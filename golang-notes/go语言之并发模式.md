@@ -230,6 +230,8 @@ func main() {
 
 ### 计算一个目录所有文件的MD5值
 
+- #### 串行版本
+
 ```go
 package main
 
@@ -290,3 +292,249 @@ func main() {
     }
 }
 ```
+
+- #### 并行版本1
+
+```go
+package main
+
+import (
+    "crypto/md5"
+    "errors"
+    "fmt"
+    "io/ioutil"
+    "os"
+    "path/filepath"
+    "sort"
+    "sync"
+)
+
+// parallel version
+type result struct {
+    path string // path of file
+    sum  [md5.Size]byte
+    err  error
+}
+
+func MD5All_Parallel(root string) (map[string][md5.Size]byte, error) {
+    //MD5All在返回的时候, 关闭done channel
+    done := make(chan struct{})
+    defer close(done)
+
+    c, errc := sumFiles(done, root)
+
+    m := make(map[string][md5.Size]byte)
+
+    for r := range c {
+        if r.err != nil {
+            return nil, r.err
+        }
+        m[r.path] = r.sum
+    }
+    if err := <-errc; err != nil {
+        return nil, err
+    }
+
+    return m, nil
+}
+
+func sumFiles(done <-chan struct{}, root string) (<-chan result, <-chan error) {
+    // for each regular file, start a new goroutine that sums the file and sends the result on c
+    c := make(chan result)
+    errc := make(chan error, 1)
+
+    go func() {
+        var wg sync.WaitGroup
+        err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+            if err != nil {
+                return err
+            }
+
+            if !info.Mode().IsRegular() {
+                return nil
+            }
+
+            wg.Add(1)
+            // 为每个File启动一个goroutine
+            go func() {
+                data, err := ioutil.ReadFile(path)
+                // 不在这里处理err, 而是将err发送出去
+                select {
+                case c <- result{path, md5.Sum(data), err}:
+                case <-done:
+                }
+                wg.Done()
+            }()
+
+            // 如果done channel关闭了, 不再进行walk
+            select {
+            case <-done:
+                return errors.New("walk canceled")
+            default:
+                return nil
+            }
+
+        })
+
+        // walk 已经return掉了, 重新开启一个goroutine
+        // 关闭channel c
+        go func() {
+            wg.Wait()
+            close(c)
+        }()
+
+        // 这里不需要额外的select, 因为errc 通道是有缓冲的
+        errc <- err
+    }()
+
+    return c, errc
+}
+
+func main() {
+    m, err := MD5All_Parallel(os.Args[1])
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    var paths []string
+    for path := range m {
+        paths = append(paths, path)
+    }
+    // sort
+    sort.Strings(paths)
+    for _, path := range paths {
+        fmt.Printf("%x %s\n", m[path], path)
+    }
+}
+```
+
+并行版本1的缺点就是对于每一个文件都要启动一个goroutine, 消耗的资源实在太大,需要修改, 请看并行版本2
+
+- #### 并行版本2
+
+pipeline非确切的定义就是一系列被channel连接起来的stage\
+所以这一个并行版本就有了3个阶段: \
+1.遍历整个目录树\
+2.读取并处理每个文件，生成自己的digest\
+3.收集所有的digest
+
+```go
+package main
+
+import (
+    "crypto/md5"
+    "errors"
+    "fmt"
+    "io/ioutil"
+    "os"
+    "path/filepath"
+    "sync"
+    "sort"
+)
+
+type result struct {
+    path string // 每个文件的位置
+    sum  [md5.Size]byte
+    err  error
+}
+
+// first stage 第一阶段
+func walkFiles(done <-chan struct{}, root string) (<-chan string, <-chan error) {
+    paths := make(chan string)
+    errc := make(chan error, 1)
+
+    go func() {
+        // 确保walk返回的时候关闭channel
+        defer close(paths)
+        // 因为errc是有缓冲的channel, 所以这边不需要select
+        errc <- filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+            if err != nil {
+                return err
+            }
+            if !info.Mode().IsRegular() {
+                return nil
+            }
+            select {
+            case paths <- path:
+            case <-done:
+                return errors.New("walk canceled")
+            }
+            return nil
+        })
+    }()
+
+    return paths, errc
+}
+
+// second stage 中间阶段
+func digester(done <-chan struct{}, paths <-chan string, c chan<- result) {
+    for path := range paths {
+        data, err := ioutil.ReadFile(path)
+        select {
+        case c <- result{path, md5.Sum(data), err}:
+        case <-done:
+            return
+        }
+    }
+}
+
+func MD5All_Bounded(root string) (map[string][md5.Size]byte, error) {
+    done := make(chan struct{})
+    defer close(done)
+
+    paths, errc := walkFiles(done, root)
+
+    // 启动固定数量的goroutine
+    c := make(chan result)
+    var wg sync.WaitGroup
+    const numDigesters = 20
+    wg.Add(numDigesters)
+
+    for i := 0; i < numDigesters; i++ {
+        go func() {
+            digester(done, paths, c)
+            wg.Done()
+        }()
+    }
+
+    go func() {
+        wg.Wait()
+        close(c)
+    }()
+    // end of pipeline
+
+    m := make(map[string][md5.Size]byte)
+    for r := range c {
+        if r.err != nil {
+            return nil, r.err
+        }
+        m[r.path] = r.sum
+    }
+
+    // 检查walk是否失败
+    if err := <-errc; err != nil {
+        return nil, err
+    }
+    return m, nil
+}
+
+func main() {
+    m, err := MD5All_Bounded(os.Args[1])
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    var paths []string
+    for path := range m {
+        paths = append(paths, path)
+    }
+    // sort
+    sort.Strings(paths)
+
+    for _, path := range paths {
+        fmt.Printf("%x %s\n", m[path], path)
+    }
+}
+```
+
+这里的goroutine个数可以修改, 比如这里的20在我的服务器上面跑就栈溢出了
