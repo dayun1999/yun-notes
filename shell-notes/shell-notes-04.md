@@ -1,6 +1,6 @@
 # shell-notes-04-让文本飞
 
-## 内容大纲
+## :blue_book:内容大纲
 
 - *正则表达式*
 - *`grep`命令搜索文本*
@@ -11,7 +11,7 @@
 ## 1. 正则表达式
 
 |正则表达式|描述|示例|
-|:--|:--|:--|
+|:--:|:--|:--|
 |^|指定想要匹配的文本的*首部*|`^he`能够匹配以he起始的行|
 |$|指定想要匹配的文本的*尾部*|`he$`能够匹配以he结尾的行|
 |.|匹配任意*一个*字符|he.只能匹配her和hey, 不能匹配hery, 只匹配单个字符|
@@ -27,12 +27,12 @@
 |`\|`|选择结构,可以匹配`\|`两边的任意一项|Oct (1st \| 2nd)能够匹配Oct 1st或者Oct 2nd|
 |`\`|转义字符,将特殊字符的特殊意义去掉|原本a.b能够匹配acb或者afb之类的(因为`.`代表匹配任意一个字符)，但是`a\.b`只能匹配a.b|
 
-感兴趣的戳这`:point_right:`[可视化正则表达式网站](https://regexper.com/)
+感兴趣的戳这:point_right:[可视化正则表达式网站](https://regexper.com/)
 
 ## 2. `grep`命令搜索文本
 
 |常用选项|描述|举例|
-|:--|:--|:--|
+|:--:|:--|:--|
 |`--color`|输出行中着重标记匹配到的模式,`--color`的值只有auto,never,always|`grep --color=never wdy hello.txt`|
 |`-E`|可以使grep使用扩展正则表达式|`grep -E " [a-z]{3} " hello.txt`|
 |`-o`|只输出匹配到的文本||
@@ -59,7 +59,7 @@
 cut命令可以按列切分文件, 对于处理固定宽度字段的文件、CSV文件或是由空格分隔的文件都十分方便
 
 |常用选项|描述|例子|
-|:--|:--|:--|
+|:--:|:--|:--|
 |`-f`|指定要提取的字段,`-f1,3`显示第一列和第三列|`cut -f field_list filename`|
 |`--complement`|显示没有被`-f`指定的那些字段,等同于补集||
 |`-d`|设置分隔符|`cut -f2 -d ";" data.txt`|
@@ -85,7 +85,7 @@ THISthisthis
 ```
 
 |常用标记|描述|示例|
-|:--|:--|:--|
+|:--:|:--|:--|
 |`-i`|该选项会用修改后的数据替换原文件|`sed -i 's/text/replace/' file`|
 |`-i.bak`|该选项会用修改后的数据替换原文件但是同时会备份原文件,文件名为file.bak|`sed -i.bak 's/text/replace/' file`|
 |`g`|该标记会进行全局替换|`sed 's/pattern/replace_string/g' file`|
@@ -97,7 +97,11 @@ THISthisthis
 
 ### sed命令的向后引用
 
+![向后引用图片](https://github.com/code4EE/images/blob/main/20210601154619.jpg)
+
 ```bash
+>>> echo seven EIGHT | sed 's/\([a-z]\+\) \([A-Z]\+\)/\2 \1/'
+EIGHT seven
 
 ```
 
@@ -198,7 +202,10 @@ for(i in array) { print array[i]; }
 
 |函数名称|描述|
 |:--|:--|
-|`length(string)`|返回字符串string的长度|
-|`index(string, search_string)`|返回search_string在字符串string中出现的位置|
-|`split(string, array, delimiter)`|以delimiter为分隔符,分割string, 将生成的字符串存入数组array|
-|`substr(regex, start_position, end-position)`|返回子串|
+|`length(string)`|返回字符串`string`的长度|
+|`index(string, search_string)`|返回`search_string`在字符串string中出现的位置|
+|`split(string, array, delimiter)`|以`delimiter`为分隔符,分割string, 将生成的字符串存入数组`array`|
+|`substr(regex, start_position, end-position)`|返回起始位置为`start_position`, 结束位置为`end_position`的子串|
+|`sub(regex, replacement_str, string)`|将正则表达式`regex`匹配到的第一处内容替换成`replacement_str`|
+|`gsub(regex, replacement_str)`|和`sub`函数类似,只不过这里是全局替换|
+|`match(regex, string)`|检查正则表达式`regex`是否能在`string`里面找到匹配, 找到返回非0值, 否则返回0|
