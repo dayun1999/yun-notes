@@ -1,4 +1,4 @@
-# :fire:gopher小黄人:sleeping:的笔记合集:fire:
+# :fire:gopher小黄人:sleeping:的笔记合集
 
 ## :blue_book:涵盖的内容【updating......】
 
