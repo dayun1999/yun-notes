@@ -1,12 +1,15 @@
+# 数据结构设计与实现
+
+**Created By: 蜜雪冰熊**
 ## 大纲
 
 - **<a href="#data_structure">数据结构设计与实现</a>**
-  - LRU缓存
-  - 前缀树Trie Tree
+  - <a href="#lru">LRU缓存</a>
+  - <a href="#trieTree">前缀树Trie Tree</a>
 
 ## <a name="data_structure">数据结构设计与实现</a>
 
-#### 1.LRU缓存
+#### <a name="lru">1.LRU缓存</a>
 
 ```go
 // LRU缓存
@@ -105,6 +108,63 @@ func (lru *LRUCache) removeTail() *DoubleLinkedNode {
 	// lru其实已经保存尾结点了
 	node := lru.tail.prev
 	lru.removeNode(node)
+	return node
+}
+```
+
+#### 2. <a name="trieTree">前缀树</a>
+
+```go
+// 数组实现前缀树
+type Trie struct {
+    children [26]*Trie	// 二叉树有两个子树,这里是多叉树
+    isEnd bool	// 是否到了一个单词的结尾
+}
+
+
+/** Initialize your data structure here. */
+func Constructor() Trie {
+	return Trie{}
+}
+
+
+/** Inserts a word into the trie. */
+func (t *Trie) Insert(word string)  {
+	node := t
+	for  _, ch := range word {
+		// 根据字母找到索引
+		ch -= 'a' 
+		// 如果孩子为空, 就新建孩子节点
+		if node.children[ch] == nil {
+			node.children[ch] = &Trie{}
+		}
+		node = node.children[ch]
+	}
+	node.isEnd = true
+}
+
+
+/** Returns if the word is in the trie. */
+func (t *Trie) Search(word string) bool {
+	node := t.SearchPrefix(word)
+	return node != nil && node.isEnd
+}
+
+
+/** Returns if there is any word in the trie that starts with the given prefix. */
+func (t *Trie) StartsWith(prefix string) bool {
+	return t.SearchPrefix(prefix) != nil
+}
+
+func (t *Trie) SearchPrefix(prefix string) *Trie {
+	node := t
+	for _, ch := range prefix {
+		ch -= 'a'
+		if node.children[ch] == nil {
+			return nil
+		}
+		node = node.children[ch]
+	}
 	return node
 }
 ```

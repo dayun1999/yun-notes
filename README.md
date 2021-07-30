@@ -1,42 +1,43 @@
 # :fire:gopher小黄人:sleeping:的笔记
 
+**Created By: 蜜雪冰熊**
+
 ## :blue_book:涵盖的内容【updating......】
 
-- **[:one:计算机书籍合集](https://github.com/code4EE/yun-notes/)**
-- **[:two:计算机基础知识(计网、操作系统...)](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/shell.md)**
-- **[:three:Go语言相关(包含学习资源推荐)](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/golang.md)**
-- **[:four:Shell编程入门笔记](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/shell.md)**
-- **[:five:算法and刷题](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm.md)**
+- **<a href="#books">:one: 计算机书籍合集</a>**
+- **<a href="#basic">:two: 计算机基础知识(计网、操作系统...)</a>**
+- **<a href="#go">:three: Go语言相关(包含学习资源推荐)</a>**
+- **<a href="#shell">:four: Shell编程入门笔记</a>**
+- **<a href="#算法">:five: 算法 And 刷题</a>**
+- **<a href="#sql">:six: SQL</a>**
+- **<a href="#sql">:seven: 面试相关</a>**
+## <a name="books">:one: 计算机书籍合集</a>
 
-## 计算机基础书籍合集
+[Gitee 传送门>>>](https://gitee.com/wdy_go/CS-Books)
 
-见`书籍(侵删)`目录
-
-## 计算机基础知识(计网、操作系统...)
+## <a name="basic">:two: 计算机基础知识(计网、操作系统...)</a>
 
 ### 操作系统
 
 - 虚拟内存相关
 
-> 推荐看的视频 [Virtual Memory](https://youtube.com/playlist?list=PLiwt1iVUib9s2Uo5BeYmwkDFUh70fJPxX)
+> 推荐看的视频 [Virtual Memory【youtube】](https://youtube.com/playlist?list=PLiwt1iVUib9s2Uo5BeYmwkDFUh70fJPxX)
 
-## Go语言相关(学习资源推荐)
+## <a name="go">:three: Go语言相关(学习资源推荐)</a>
 
 ### 推荐阅读
-
+- [Go夜读-哔哩哔哩](https://space.bilibili.com/326749661?from=search&seid=1752206758356276456)
 - [Go语言编程之旅](https://golang2.eddycjy.com/)
-- [Go 语言设计与实现](https://draveness.me/golang/)
+- [Go 语言设计与实现(这个很棒)](https://draveness.me/golang/)
 
-## Shell编程入门笔记
+## <a name="shell">:four: Shell编程入门笔记</a>
 
-待续...
+[传送门](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/shell.md)
 
-## 算法and刷题
+未完待续...
 
-\
-\
-\
-\
+
+## <a name="算法">:five: 算法and刷题</a>
 ### [算法技巧](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/算法技巧.md)
 
 - 快速幂求余
@@ -48,3 +49,6 @@
 - 前缀树Trie Tree的实现
 
 - 两个栈实现一个队列
+
+
+## <a name="sql">:six: SQL</a>
