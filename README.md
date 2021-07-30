@@ -33,6 +33,18 @@
 
 ## 算法and刷题
 
-### 数据结构设计与实现
+\
+\
+\
+\
+### [算法技巧](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/算法技巧.md)
 
-- [LRU缓存实现](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm.md)
+- 快速幂求余
+
+### [数据结构设计与实现](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm.md)
+
+- LRU缓存实现
+
+- 前缀树Trie Tree的实现
+
+- 两个栈实现一个队列
