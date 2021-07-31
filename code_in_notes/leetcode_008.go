@@ -1,0 +1,77 @@
+package leetcode_008
+
+import (
+	"math"
+)
+
+// 字符串转整数
+func myAtoi(s string) int {
+	auto := Constructor()
+	for i := 0; i < len(s); i++ {
+		auto.Get(s[i])
+	}
+	return auto.ans * auto.sign
+}
+
+type Automation struct {
+	sign int	// 符号
+	ans	 int 	// 转换得到的整数
+	state string // 当前的状态
+	table map[string][]string // 状态机
+}
+
+func Constructor() *Automation {
+	// 记录每个状态对以下事件能达到的状态
+	// 头脑里面记得那张状态图
+	// ' '		+/-		number		other
+	var table = map[string][]string{
+		"start" :   {"start", "signed", "in_number", "end"},
+		"signed":   {"end"  , "end",    "in_number", "end"},
+		"in_number":{"end"  , "end",    "in_number", "end"},
+		"end":      {"end"  , "end",    "end",       "end"},
+	}
+	return &Automation{
+		sign: 1, // 默认是正数
+		ans: 0,
+		state: "start", // 从start状态开始
+		table: table, // 状态机
+	}
+}
+
+func (a *Automation) Get(c byte) {
+	a.state = a.table[a.state][getCol(c)] // 先由字符c得到下一个状态
+	// 如果下一个状态是数字(也即是说字符c代表的就是数字)
+	if a.state == "in_number" {
+		a.ans = a.ans*10 + int(c-'0')
+		// 这里是为了防止数字过大或者过小导致溢出
+		if a.sign == 1 {
+			a.ans = Min(a.ans, math.MaxInt32)
+		} else {
+			a.ans = Min(a.ans, -math.MinInt32)
+		}
+	} else if a.state == "signed" {
+		// 如果下一个状态就是signed, 那么更新sign
+		if c == '-' {
+			a.sign = -1
+		} else if c == '+' {
+			a.sign = 1
+		}
+	}
+}
+
+func getCol(c byte) int {
+	if c == ' ' { return 0 }
+	if c == '+' || c == '-' { return 1 }
+	if '0' <= c && c <= '9' { return 2 }
+	return 3
+}
+
+func Min(a ...int) int {
+    min := a[0]
+    for _, v := range a[1:] {
+        if v < min {
+            min = v
+        }   
+    }
+    return min
+}
