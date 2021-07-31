@@ -9,7 +9,7 @@
 - **<a href="#go">:three: Go语言相关(包含学习资源推荐)</a>**
 - **<a href="#shell">:four: Shell编程入门笔记</a>**
 - **<a href="#算法">:five: 算法 And 刷题</a>**
-- **<a href="#sql">:six: SQL</a>**
+- **<a href="#sql">:six: SQL学习</a>**
 - **<a href="#sql">:seven: 面试相关</a>**
 ## <a name="books">:one: 计算机书籍合集</a>
 
@@ -29,6 +29,8 @@
 - [Go夜读-哔哩哔哩](https://space.bilibili.com/326749661?from=search&seid=1752206758356276456)
 - [Go语言编程之旅](https://golang2.eddycjy.com/)
 - [Go 语言设计与实现(这个很棒)](https://draveness.me/golang/)
+- [某位大佬的博客](https://mojotv.cn/404#Go%E8%BF%9B%E9%98%B6)
+- [7天从零系列【ORM、RPC、Cache等框架的简易实现】](https://geektutu.com/post/gee.html)
 
 ## <a name="shell">:four: Shell编程入门笔记</a>
 
@@ -41,6 +43,8 @@
 ### [算法技巧](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/算法技巧.md)
 
 - 快速幂求余
+- 滚雪球(移动零)
+- 有限状态机(`Atoi`的实现)
 
 ### [数据结构设计与实现](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm.md)
 
@@ -51,4 +55,10 @@
 - 两个栈实现一个队列
 
 
-## <a name="sql">:six: SQL</a>
+## <a name="sql">:six: SQL学习</a>
+
+### 资源推荐
+
+- [基本的SQL语法学习-W3school](https://www.w3schools.com/sql/sql_intro.asp)
+- [MySQL学习](https://www.begtut.com/mysql/mysql-tutorial.html)
+- [Leetcode刷题]()
