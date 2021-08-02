@@ -9,6 +9,7 @@
 - <a href="#snowball">滚雪球(见题目《移动零》)</a>
 - <a href="#automaton">有限自动机/状态机(《Atoi的实现》)</a>
 - <a href="#239">单调队列的使用(见题目《滑动窗口的最大值》)</a>
+- <a href="#Boyer-Moore">Boyer-Moore投票算法</a>
 
 <br>
 
@@ -77,7 +78,7 @@ func pow(x float64, N int) float64 {
 |题目|实现代码|
 |:--|:--|
 |[剑指offer20: 表示数值的字符串](https://leetcode-cn.com/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/)|[传送门](https://github.com/code4EE/yun-notes/blob/main/code_in_notes/leetcode_offer_20.go)|
-|[Leetcode 008: Atoi的实现](https://leetcode-cn.com/problems/string-to-integer-atoi/)|[传送门](https://github.com/code4EE/yun-notes/blob/main/code_in_notes/leetcode_008.go)|
+|[Leetcode 008-Atoi的实现](https://leetcode-cn.com/problems/string-to-integer-atoi/)|[传送门](https://github.com/code4EE/yun-notes/blob/main/code_in_notes/leetcode_008/leetcode_008.go)|
 
 \
 \
@@ -93,10 +94,14 @@ func pow(x float64, N int) float64 {
 2. 在任意时刻访问队列中元素的最大值
 3. 各操作的平均复杂度为O(1)
 
+<br/>
 
+## <a name="Boyer-Moore">Boyer-Moore投票算法</a>
 
-
-
+|题目|实现代码|
+|:--|:--|
+|[Leetcode 169-多数元素](https://leetcode-cn.com/problems/majority-element/) | [传送门](https://github.com/code4EE/yun-notes/blob/main/code_in_notes/leetcode_169/leetcode_169.go)|
+|[Leetcode 229-求众数II](https://leetcode-cn.com/problems/majority-element-ii/) | [传送门](https://github.com/code4EE/yun-notes/blob/main/code_in_notes/leetcode_229/leetcode_229.go)|
 
 
 

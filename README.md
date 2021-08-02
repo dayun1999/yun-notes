@@ -66,6 +66,7 @@
 - 滚雪球(移动零)
 - 有限状态机(`Atoi`的实现)
 - 单调队列的使用
+- Boyer-Moore投票算法
 
 ### [数据结构设计与实现](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm.md)
 
@@ -80,8 +81,8 @@
 ### 资源推荐
 
 - [基本的SQL语法学习-W3school](https://www.w3schools.com/sql/sql_intro.asp)
-- [MySQL学习](https://www.begtut.com/mysql/mysql-tutorial.html)
-- [Leetcode刷题]()
+- [MySQL学习](https://www.begtut.com/mysql/mysql-tutorial.html) 【推荐, 跟着网站给的sql文件一步一步学习MySQL】
+- [Leetcode刷题]()(不建议直接上手)
 
 ## <a name="interview">:seven: About Interview</a>
 
