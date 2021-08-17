@@ -48,7 +48,7 @@
 - [Go 语言设计与实现(这个很棒)](https://draveness.me/golang/)
 - [某位大佬的博客](https://mojotv.cn/404#Go%E8%BF%9B%E9%98%B6)
 - [7天从零系列【ORM、RPC、Cache等框架的简易实现】](https://geektutu.com/post/gee.html)
-
+- [本人的读书笔记]()
 <br>
 
 ## <a name="shell">:four: Shell编程入门笔记</a>
@@ -68,11 +68,17 @@
 - 单调队列的使用
 - Boyer-Moore投票算法
 
+### [个人认为必刷的题]()
+
+- #### 链表
+  - [【25】K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
 ### [数据结构设计与实现](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm.md)
 
 - LRU缓存实现
 - 前缀树Trie Tree的实现
 - 两个栈实现一个队列
+- 双端队列
 
 <br>
 
