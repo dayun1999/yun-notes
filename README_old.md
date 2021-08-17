@@ -5,12 +5,12 @@
 ## :blue_book:涵盖的内容【updating......】
 
 - **<a href="#books">:one: 计算机书籍合集</a>**
-
 - **<a href="#basic">:two: 计算机基础知识(计网、操作系统...)</a>**
-
-- **<a href="#go">:three: Go语言相关</a>**
-
-- **<a href="#interview">:four: 面试相关</a>**
+- **<a href="#go">:three: Go语言相关(包含学习资源推荐)</a>**
+- **<a href="#shell">:four: Shell编程入门笔记</a>**
+- **<a href="#算法">:five: 算法 And 刷题</a>**
+- **<a href="#sql">:six: SQL学习</a>**
+- **<a href="#interview">:seven: 面试相关</a>**
 
 <br>
 
@@ -37,6 +37,8 @@
 - [Computer Networking : Principles, Protocols and Practice](https://www.computer-networking.info/2nd/html/)
 <br>
 <br>
+<br>
+<br>
 
 ## <a name="go">:three: Go语言相关(学习资源推荐)</a>
 
@@ -49,9 +51,48 @@
 - [本人的读书笔记](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/my_golang_notes)
 <br>
 
+## <a name="shell">:four: Shell编程入门笔记</a>
+
+[传送门](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/shell.md)
+
+未完待续...
+
 <br>
 
-## <a name="interview">:four: About Interview</a>
+## <a name="算法">:five: 算法and刷题</a>
+### [算法技巧](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm_technics.md)
+
+- 快速幂求余
+- 滚雪球(移动零)
+- 有限状态机(`Atoi`的实现)
+- 单调队列的使用
+- Boyer-Moore投票算法
+
+### [个人认为必刷的题]()
+
+- #### 链表
+  - [【25】K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
+### [数据结构设计与实现](https://github.com/code4EE/yun-notes/blob/main/index_of_notes/algorithm.md)
+
+- LRU缓存实现
+- 前缀树Trie Tree的实现
+- 两个栈实现一个队列
+- 双端队列
+
+<br>
+
+## <a name="sql">:six: SQL学习</a>
+
+### 资源推荐
+
+- [基本的SQL语法学习-W3school](https://www.w3schools.com/sql/sql_intro.asp)
+- [MySQL学习](https://www.begtut.com/mysql/mysql-tutorial.html) 【推荐, 跟着网站给的sql文件一步一步学习MySQL】
+- [Leetcode刷题]()(不建议直接上手)
+
+## <a name="interview">:seven: About Interview</a>
+
+<br>
 
 - 八股文系列
   - [硬核操作系统指南](https://leetcode-cn.com/leetbook/read/awesome-os-guide/ey5x72/)
