@@ -5,28 +5,20 @@
 ## 目录
 
 - <a href="#slice">切片</a>
-
 - <a href="#string">字符串</a>
-
+- <a href="#map">map</a>
 - <a href="#function_call">函数调用</a>
-
 - <a href="#interface">接口</a>
-
 - <a href="#defer">defer</a>
-
 - <a href="#panic_recover">panic 和 recover</a>
-
 - <a href="#make&new">make 和 new</a>
-
 - <a href="#uintptr_and_unsafe.Pointer">uintptr和unsafe.Pointer的区别</a>
-
 - <a href="#concurrency-context">并发编程--上下文Context</a>
-
 - <a href="#concurrency-primitives&mutex">并发编程--同步原语与锁</a>
-
 - <a href="#concurrency-channel">并发编程--Channel</a>
-
-- 
+- <a href="#golang_gc">GC</a>
+- <a href="#"></a>
+- <a href="#"></a>
 
 
 
@@ -111,6 +103,105 @@ type StringHeader struct {
 
 
 #### 3. `string`与`[]byte`的类型转换
+
+
+
+#### 4. `str == ""` 和 `len(str) == 0`有什么区别
+
+没有区别, 汇编代码都是一样的
+
+
+
+## <a href="#map">map</a>
+
+#### 1. key与value的限制
+
+key的类型一定要可比较`可以理解为支持 == 的操作`
+
+| 可比较类型      | 不可比较类型 |
+| --------------- | ------------ |
+| bool            | slice        |
+| numeric         | func         |
+| string          | map          |
+| pointer         |              |
+| channel         |              |
+| interface       |              |
+| array 和 struct |              |
+
+#### 2. map的扩容机制
+
+如果之前为2^n ，那么下一次扩容是2^(n+1),每次扩容都是之前的两倍。扩容后需要重新计算每一项在hash中的位置，新表为老的两倍，此时前文的oldbacket用上了，用来存同时存在的两个心就map，等数据迁移完毕就可以释放oldbacket了
+
+好处: **均摊扩容时间，一定程度上缩短了扩容时间**
+
+那么overLoadFactor函数中有一个常量6.5（loadFactorNum/loadFactorDen）来进行影响扩容时机。这个值的来源是测试取中的结果
+
+#### 3.  map的gc回收机制
+
+一句话: `delete`并不会立刻删除map中的内容
+
+```go
+var intMap map[int]int // 万不可放到main函数里面,否则直接分配到栈上去了,全局变量分配在堆上
+
+func main() {
+	printMemStats("初始化")
+
+	//
+	intMap = make(map[int]int, 100000)
+	for i := 0; i < 100000; i++ {
+		intMap[i] = i
+	}
+	// 手动进行GC
+	runtime.GC()
+
+	printMemStats("添加map")
+
+	log.Println("删除前map长度", len(intMap))
+	for i := 0; i < 100000; i++ {
+		delete(intMap, i)
+	}
+	log.Println("删除后map长度", len(intMap))
+
+	// 手动GC
+	runtime.GC()
+	printMemStats("删除数据后")
+
+	// 设置nil
+	intMap = nil
+	runtime.GC()
+	printMemStats("设置为nil后")
+
+}
+
+// 查看当前内存情况
+func printMemStats(message string) {
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	log.Println(message)
+	log.Printf("---------- 内部分配=%vKB\n", m.Alloc/1024)
+	log.Printf("---------------------GC 次数=%v\n", m.NumGC)
+}
+```
+
+```go
+// 输出结果
+2021/08/19 11:06:57 初始化
+2021/08/19 11:06:57 ---------- 内部分配=151KB
+2021/08/19 11:06:57 ---------------------GC 次数=0
+2021/08/19 11:06:57 添加map
+2021/08/19 11:06:57 ---------- 内部分配=2846KB
+2021/08/19 11:06:57 ---------------------GC 次数=1
+2021/08/19 11:06:57 删除前map长度 100000
+2021/08/19 11:06:57 删除后map长度 0
+2021/08/19 11:06:57 删除数据后
+2021/08/19 11:06:57 ---------- 内部分配=2846KB
+2021/08/19 11:06:57 ---------------------GC 次数=2
+2021/08/19 11:06:57 设置为nil后
+2021/08/19 11:06:57 ---------- 内部分配=148KB
+2021/08/19 11:06:57 ---------------------GC 次数=3
+```
+
+
 
 
 
@@ -302,13 +393,51 @@ type _defer struct {
 
 
 
-#### `defer`关键字的实现
+#### 4. `defer`关键字的实现
 
 堆分配、栈分配和开放编码是处理 `defer` 关键字的三种方法
 
 - 堆上分配- `1.1 ~ 1.12`
 - 栈上分配- `1.13`
 - 开放编码- `1.14 ~ 现在`
+
+
+
+#### 5. defer的一些有趣的面试题
+
+```go
+func main() {
+	fmt.Println(func1())
+	fmt.Println(func2())
+}
+
+// 这里用到了caller-save模式, i会被存放在main的栈空间,
+func func1() (i int) {
+	i = 100
+	// 闭包中对外部变量i进行写入,所以这里是存的变量i的指针
+	defer func() {
+		i += 1 // 最后执行 5 + 1
+	}()
+	return 5 // 返回的时候将i修改为5
+}
+
+func func2() int {
+	var i int // i声明在func2,所以会被放进func2的栈空间中,对比一下func1是放在main函数的栈空间
+	defer func() {
+		i += 1         // 修改的还是func2的栈空间的数,所以这里是101,
+		fmt.Println(i) // 101
+	}()
+	i += 100
+	return i // 将i=100返回到main的栈空间
+}
+
+// 预期输出:
+// 101
+// 6
+// 实际输出
+// 6
+// 100
+```
 
 
 
@@ -618,3 +747,34 @@ func TODO() Context {
 常用的场景:
 
 > 缓存击穿
+
+
+
+
+
+## <a name="golang_gc">GC</a>
+
+#### 1. GC的触发条件
+
+- 超过内存大小阈值---`gcpercent`
+- 达到定时时间--默认`2 min`
+
+```go
+const (
+	// gcTriggerHeap indicates that a cycle should be started when
+	// the heap size reaches the trigger heap size computed by the
+	// controller.
+	gcTriggerHeap gcTriggerKind = iota
+
+	// gcTriggerTime indicates that a cycle should be started when
+	// it's been more than forcegcperiod nanoseconds since the
+	// previous GC cycle.
+	gcTriggerTime
+
+	// gcTriggerCycle indicates that a cycle should be started if
+	// we have not yet started cycle number gcTrigger.n (relative
+	// to work.cycles).
+	gcTriggerCycle
+)
+```
+
