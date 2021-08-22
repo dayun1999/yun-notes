@@ -1,0 +1,61 @@
+## 题目
+
+#### [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
+```go
+输入：head = [1,2,3,4,5], k = 2
+输出：[2,1,4,3,5]
+```
+
+
+
+## 分析
+
+
+
+## 解答
+
+```go
+// K个一组翻转链表
+func reverseKGroup(head *ListNode, k int) *ListNode {
+	dummyNode := &ListNode{Next: head}
+	prev := dummyNode
+
+	for head != nil {
+		tail := prev
+		// 先循环K次找到前K个节点
+		for i := 0; i < k; i++ {
+			tail = tail.Next
+			// 剩余的节点数量不足K个，不需要继续往下处理了, 直接返回头结点了
+			if tail == nil {
+				return dummyNode.Next
+			}
+		}
+		// 先保存下一个节点
+		nex := tail.Next
+		// 翻转前K个, 得到新的部分链表
+		head, tail = reverse(head, tail)
+		prev.Next = head
+		tail.Next = nex
+		prev = tail // 临时头, 每次移动K个节点,所有都移动到新头部的前面
+		head = tail.Next
+	}
+
+	return dummyNode.Next
+}
+
+// 翻转链表
+func reverse(head, tail *ListNode) (*ListNode, *ListNode) {
+	prev := tail.Next
+	var temp *ListNode
+	cur := head
+	for prev != tail {
+		temp = cur.Next
+		cur.Next = prev
+		prev = cur
+		cur = temp
+	}
+	return tail, head
+}
+```
+

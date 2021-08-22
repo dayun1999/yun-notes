@@ -1,5 +1,14 @@
 # 笔记：git的使用
 
+**Created By: 蜜雪冰熊**
+
+## 目录
+- <a href="#basic_operation">Git操作的一般流程</a>
+- <a href="#branch">分支相关</a>
+- <a href="#"></a>
+- <a href="#"></a>
+- <a href="#"></a>
+
 ##  <font color="blue">操作GitHub的一般流程</font>
 
 ```python
@@ -97,8 +106,8 @@ $ git push origin --deleted <我们新建的分支的名字>
 ```
 
 
-
-## <font color="red">如何创建新的分支</font>
+## <a name="branch">分支相关</a>
+### <font color="red">如何创建新的分支</font>
 
 ```python
 #1. 创建新的分支
@@ -119,7 +128,11 @@ git remote add origin https://github.com/...
 #4. 将分支上传
 git push origin 分支名字
 ```
+### 删除远程分支
 
+```python
+git push origin --delete <remote branch name>
+```
 
 
 
