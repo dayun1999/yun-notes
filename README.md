@@ -73,10 +73,10 @@
 - [数组]()
 - [链表]()
 - [二叉树]()
-- [二分查找]()
+- [二分查找](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE)
 - [字符串]()
 - [栈 & 队列]()
-- [DFS & BFS]()
+- [BFS & DFS](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/BFS%26DFS)
 - [堆]()
 - [前缀树]()
 - [并查集]()
@@ -84,6 +84,10 @@
 - [图]()
 - [动态规划]()
 - [位运算]()
+- [双指针(快慢指针)]()
+- [贪心算法]()
+- [数学]()
+- [数据结构设计]()
 ## <a name="interview">:five: 面试相关</a>
 
 - 八股文系列
