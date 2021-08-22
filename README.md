@@ -103,4 +103,4 @@
 
 ##### 微信公众号
 
-![]()
+![微信公众号:go学习](https://github.com/code4EE/yun-notes/blob/main/resources/images/weixin_golearning.jpg)
