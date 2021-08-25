@@ -1,5 +1,7 @@
 ## 题目
 
+#### [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
+
 
 
 ## 分析
@@ -7,4 +9,66 @@
 
 
 ## 解答
+
+```go
+func solveNQueens(n int) [][]string {
+	res := [][]string{}
+	// 定义矩阵
+	matrix := make([][]byte, n)
+	for i := range matrix {
+		matrix[i] = make([]byte, n)
+	}
+	// 构建棋盘
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			matrix[i][j] = '.'
+		}
+	}
+	// 定义数据结构记录当前列//斜线有没有其他皇后
+	// 因为行每次都是下一行,所以不需要记录
+	columnMap := map[int]bool{}
+	dignoal1, dignoal2 := map[int]bool{}, map[int]bool{} // 正斜线, 反斜线
+
+	var dfs func(int)
+	dfs = func(row int) {
+		if row == n {
+			// 将当前的棋盘存起来
+			temp := make([]string, n)
+			for i := range temp {
+				temp[i] = string(append([]byte(nil), matrix[i]...))
+			}
+			res = append(res, temp)
+			return
+		}
+		for i := 0; i < n; i++ {
+			// 当前列/斜线有皇后
+			if columnMap[i] || dignoal1[row+i] || dignoal2[row-i] {
+				continue
+			}
+			// 做出选择
+			matrix[row][i] = 'Q'
+			columnMap[i] = true
+			dignoal1[row+i] = true
+			dignoal2[row-i] = true
+			// 这样写错误: index out of range
+			// defer func() {
+			//     matrix[row][i] = '.'
+			//     columnMap[i] = false
+			//     dignoal1[row+i] = false
+			//     dignoal2[row-i] = false
+			// }()
+			dfs(row + 1)
+			// 撤销选择
+			matrix[row][i] = '.'
+			columnMap[i] = false
+			dignoal1[row+i] = false
+			dignoal2[row-i] = false
+		}
+
+	}
+	dfs(0)
+	return res
+}
+
+```
 
