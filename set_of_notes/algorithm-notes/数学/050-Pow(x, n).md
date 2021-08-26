@@ -1,10 +1,14 @@
 ## 题目
 
-
+#### [50. Pow(x, n) （中等）](https://leetcode-cn.com/problems/powx-n/)
 
 ## 分析
 
+快速幂相乘
 
+**时间复杂度: ** `O(lgN)`
+
+**空间复杂度:  **`O(1)`
 
 ## 解答
 

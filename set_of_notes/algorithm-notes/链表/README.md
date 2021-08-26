@@ -58,3 +58,39 @@ func getMiddle1(head *ListNode) *ListNode {
 }
 ```
 
+## 反转链表
+
+### 参数输入只有head
+
+```go
+func reverse(head *ListNode) *ListNode {
+    var prev *ListNode
+    cur := head
+    for cur != nil {
+        temp := cur.Next
+        cur.Next = prev
+        prev = cur
+        cur = temp
+    }
+    return prev
+}
+```
+
+
+
+### 参数输入有head和tail
+
+```go
+func reverse(head, tail *ListNode) (*ListNode, *ListNode) {
+    prev := tail.Next
+    cur := head
+    for prev != tail {
+        temp := cur.Next
+        cur.Next = prev
+        prev = cur
+        cur = temp
+    }
+    return tail, head
+}
+```
+
