@@ -15,6 +15,7 @@
 
 - **<a href="#interview">:five: 面试相关</a>**
 
+- **<a href="#linux">:six: Linux </a>**
 <br>
 
 ## <a name="books">:one: 计算机书籍合集</a>
@@ -44,6 +45,8 @@
 
 ## <a name="go">:three: Go语言相关</a>
 
+#### [我的读书笔记~](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/my_golang_notes)
+
 ### 推荐阅读
 
 - [Go夜读-哔哩哔哩](https://space.bilibili.com/326749661?from=search&seid=1752206758356276456)
@@ -52,7 +55,6 @@
 - [某位大佬的博客](https://mojotv.cn/404#Go%E8%BF%9B%E9%98%B6)
 - [【推荐】7天从零系列【ORM、RPC、Cache等框架的简易实现】](https://geektutu.com/post/gee.html)
 - [【推荐】Go语言原本--欧长坤大佬](https://golang.design/under-the-hood/)
-- [蜜雪冰熊(本人)的读书笔记](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/my_golang_notes)
 <br>
 
 ### 博客推荐
@@ -70,7 +72,7 @@
 
 ## <a name="algorithm">:four: 数据结构和算法</a>
 
-- [数组]()
+- [数组](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E6%95%B0%E7%BB%84)
 - [链表](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E9%93%BE%E8%A1%A8)
 - [二叉树](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E4%BA%8C%E5%8F%89%E6%A0%91)
 - [二分查找](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE)
@@ -81,7 +83,7 @@
 - [前缀树](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E5%89%8D%E7%BC%80%E6%A0%91)
 - [并查集](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E5%B9%B6%E6%9F%A5%E9%9B%86)
 - [排序](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E6%8E%92%E5%BA%8F)
-- [图]()
+- [图](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E5%9B%BE)
 - [动态规划](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)
 - [位运算](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E4%BD%8D%E8%BF%90%E7%AE%97)
 - [双指针(快慢指针)](https://github.com/code4EE/yun-notes/tree/main/set_of_notes/algorithm-notes/%E5%8F%8C%E6%8C%87%E9%92%88)
@@ -100,6 +102,9 @@
   - map
 
 <br>
+
+## <a name="linux">:six: Linux</a>
+
 
 ##### 微信公众号
 
